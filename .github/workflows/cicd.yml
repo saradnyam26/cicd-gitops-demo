@@ -1,0 +1,29 @@
+name : CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Check application files
+        run:
+        echo "Checking application..."
+        test -f index.html     
+        test -f Dockerfile
+        test -f deployment.yaml
+        echo "Application files found successfully."
+      - name: Build Docker image
+        run: |
+          docker build -t gitops-demo:1.0 .
+      
+      - name: CI/CD completed
+        run: echo "CI/CD pipeline executed successfully."
+
+
+
